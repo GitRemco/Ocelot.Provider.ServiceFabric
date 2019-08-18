@@ -37,3 +37,8 @@ services.AddOcelot()
   - The `FabricClient` service endpoints cache gets updates by notification on cluster changes.  
      Adding a notification for a service will take ~1.5 seconds on the first resolve.  
      Setting both `ResolveClientsOnStartup` and `UpdateOnClusterChanges` on `true` will add the notification and fills the  `FabricClient`cache on startup. So the initial resolve when using Ocelot gateway is fast.  
+
+## Download
+
+https://www.nuget.org/packages/Ocelot.Provider.ServiceFabric/1.0.0
+
