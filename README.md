@@ -25,8 +25,8 @@ services.AddOcelot()
     "RequestIdKey": "OcRequestId",
     "ServiceDiscoveryProvider": {
       "Type": "servicefabricprovider",
-      "ResolveClientsOnStartup": "true",
-      "UpdateOnClusterChanges": "true"
+      "ResolveClientsOnStartup": true,
+      "UpdateOnClusterChanges": true
     }
   }
 }
