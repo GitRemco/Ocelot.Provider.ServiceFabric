@@ -1,5 +1,13 @@
 # Ocelot.Provider.ServiceFabric
 
+The current `Service Fabric` support in [Ocelot API Gateway](https://github.com/ThreeMammals/Ocelot) 
+requires the `Service Fabric reverse proxy` to be enabled.   
+The `Service Fabric reverse proxy` is not always enabled.
+
+
+This extension adds a `Service Fabric provider` to Ocelot.  
+It uses the Service Fabric `FabricClient` and `ServicePartitionResolver` as service discovery and to resolve service endpoints.
+
 ## How to use
 
 #### Startup
