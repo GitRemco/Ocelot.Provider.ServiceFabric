@@ -15,13 +15,7 @@ namespace Ocelot.Provider.ServiceFabric
     {
         private static readonly string GlobalConfiguration = "GlobalConfiguration:ServiceDiscoveryProvider";
 
-        public static IOcelotBuilder AddServiceFabric(this IOcelotBuilder builder)
-        {
-            var service = builder.Services.First(x => x.ServiceType == typeof(IConfiguration));
-            var configuration = (IConfiguration)service.ImplementationInstance;
-
-            return builder.AddServiceFabric(configuration);
-        }
+        public static IOcelotBuilder AddServiceFabric(this IOcelotBuilder builder) => builder.AddServiceFabric(builder.Configuration);
 
         public static IOcelotBuilder AddServiceFabric(this IOcelotBuilder builder, IConfiguration configuration)
         {
