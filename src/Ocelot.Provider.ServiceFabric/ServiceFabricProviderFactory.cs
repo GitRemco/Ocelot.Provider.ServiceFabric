@@ -21,13 +21,5 @@ namespace Ocelot.Provider.ServiceFabric
             var serviceFabricDiscoveryProvider = new ServiceFabricProvider(reRoute.ServiceName, servicePartitionResolver, factory);
             return serviceFabricDiscoveryProvider;
         }
-
-        // Support Ocelot <= 13.5.2
-        private static ServiceDiscovery.Providers.IServiceDiscoveryProvider GetServiceFabricProvider(IServiceProvider provider, ServiceProviderConfiguration config, string reRoute, IOcelotLoggerFactory factory)
-        {
-            var servicePartitionResolver = provider.GetService<IServicePartitionResolver>();
-            var serviceFabricDiscoveryProvider = new ServiceFabricProvider(reRoute, servicePartitionResolver, factory);
-            return serviceFabricDiscoveryProvider;
-        }
     }
 }
