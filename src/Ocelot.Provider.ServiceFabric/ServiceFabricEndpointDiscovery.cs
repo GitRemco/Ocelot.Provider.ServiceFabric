@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Fabric;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
@@ -37,7 +38,7 @@ namespace Ocelot.Provider.ServiceFabric
 
             try
             {
-                foreach (var serviceName in serviceNames)
+                foreach (var serviceName in serviceNames?.Distinct())
                 {
                     _logger.LogInformation($"Resolving service: '{serviceName}'.");
 
@@ -46,17 +47,11 @@ namespace Ocelot.Provider.ServiceFabric
                     foreach (var partition in partitions)
                     {
                         _logger.LogInformation($"Discovered service partition: '{partition.PartitionInformation.Kind}':'{partition.PartitionInformation.Id}'");
-
-                        ServicePartitionKey key;
-                        switch (partition.PartitionInformation.Kind)
+                        var key = partition.PartitionInformation.Kind switch
                         {
-                            case ServicePartitionKind.Singleton:
-                                key = ServicePartitionKey.Singleton;
-                                break;
-                            default:
-                                throw new ArgumentOutOfRangeException($"Partitionkind: '{partition.PartitionInformation.Kind}' unknown.");
-                        }
-
+                            ServicePartitionKind.Singleton => ServicePartitionKey.Singleton,
+                            _ => throw new ArgumentOutOfRangeException($"Partitionkind: '{partition.PartitionInformation.Kind}' unknown."),
+                        };
                         try
                         {
                             var resolved = await _servicePartitionResolver.ResolveAsync(serviceNameUri, key, TimeSpan.FromSeconds(10), TimeSpan.FromSeconds(10), CancellationToken.None);

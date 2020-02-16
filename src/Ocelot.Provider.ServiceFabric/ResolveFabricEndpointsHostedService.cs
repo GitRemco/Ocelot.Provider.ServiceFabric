@@ -6,7 +6,7 @@ using Ocelot.Configuration.Repository;
 
 namespace Ocelot.Provider.ServiceFabric
 {
-    public class ResolveFabricEndpointsHostedService : IHostedService
+    public class ResolveFabricEndpointsHostedService : BackgroundService
     {
         private readonly IInternalConfigurationRepository _internalConfigurationRepository;
         private readonly IServiceFabricEndpointDiscovery _serviceFabricEndpointDiscovery;
@@ -17,17 +17,22 @@ namespace Ocelot.Provider.ServiceFabric
             _serviceFabricEndpointDiscovery = serviceFabricEndpointDiscovery;
         }
 
-        public async Task StartAsync(CancellationToken cancellationToken)
+        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            var config = _internalConfigurationRepository.Get();
-            var serviceNames = config.Data.ReRoutes.SelectMany(x => x.DownstreamReRoute.Select(y => y.ServiceName));
-
-            await _serviceFabricEndpointDiscovery.Discover(serviceNames);
-        }
-
-        public Task StopAsync(CancellationToken cancellationToken)
-        {
-            return Task.CompletedTask;
+            var foundConfig = false;
+            while (!stoppingToken.IsCancellationRequested && !foundConfig)
+            {
+                // Delay because the HostedService is executed before the middleware. 
+                // The Ocelot configuration is added in the `UseOcelot` middleware.
+                await Task.Delay(2000);
+                var config = _internalConfigurationRepository.Get();
+                foundConfig = config.Data != null;
+                if (foundConfig)
+                {
+                    var serviceNames = config.Data.ReRoutes.SelectMany(x => x.DownstreamReRoute.Select(y => y.ServiceName));
+                    await _serviceFabricEndpointDiscovery.Discover(serviceNames);
+                }
+            }
         }
     }
 }
