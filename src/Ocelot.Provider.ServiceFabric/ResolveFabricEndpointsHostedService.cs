@@ -29,7 +29,7 @@ namespace Ocelot.Provider.ServiceFabric
                 foundConfig = config.Data != null;
                 if (foundConfig)
                 {
-                    var serviceNames = config.Data.Routes.SelectMany(x => x.DownstreamRoute.Select(downStreamRoute => downStreamRoute.ServiceName));
+                    var serviceNames = config.Data.Routes.SelectMany(x => x.DownstreamRoute.Select(downstreamRoute => downstreamRoute.ServiceName));
                     await _serviceFabricEndpointDiscovery.Discover(serviceNames);
                 }
             }
