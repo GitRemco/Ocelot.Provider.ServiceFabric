@@ -24,12 +24,12 @@ namespace Ocelot.Provider.ServiceFabric
             {
                 // Delay because the HostedService is executed before the middleware. 
                 // The Ocelot configuration is added in the `UseOcelot` middleware.
-                await Task.Delay(2000);
+                await Task.Delay(2000, stoppingToken);
                 var config = _internalConfigurationRepository.Get();
                 foundConfig = config.Data != null;
                 if (foundConfig)
                 {
-                    var serviceNames = config.Data.ReRoutes.SelectMany(x => x.DownstreamReRoute.Select(y => y.ServiceName));
+                    var serviceNames = config.Data.Routes.SelectMany(x => x.DownstreamRoute.Select(downstreamRoute => downstreamRoute.ServiceName));
                     await _serviceFabricEndpointDiscovery.Discover(serviceNames);
                 }
             }
