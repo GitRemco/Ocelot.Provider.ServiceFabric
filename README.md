@@ -18,7 +18,7 @@ services.AddOcelot()
 #### Ocelot configuration
 ```json
 {
-  "ReRoutes": [
+  "Routes": [
     {
       "DownstreamPathTemplate": "/api/values",
       "UpstreamPathTemplate": "/test",
@@ -39,6 +39,7 @@ services.AddOcelot()
   }
 }
 ```
+> :warning: Use `"ReRoutes": [` in version < 3.0
 - ResolveClientsOnStartup
   - A hosted service will resolve all configured services on startup.
 - UpdateOnClusterChanges
