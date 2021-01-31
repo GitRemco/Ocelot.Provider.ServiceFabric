@@ -9,7 +9,7 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageTags>API Gateway;.NET core;Ocelot</PackageTags>
     <RepositoryType>git</RepositoryType>
-    <Copyright>Copyright © GitRemco 2020</Copyright>
+    <Copyright>Copyright © GitRemco 2021</Copyright>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <Authors>GitRemco</Authors>
   </PropertyGroup>
