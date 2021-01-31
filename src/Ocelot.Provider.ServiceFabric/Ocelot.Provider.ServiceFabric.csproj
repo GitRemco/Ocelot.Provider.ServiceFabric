@@ -21,7 +21,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="5.0.0" />
-    <PackageReference Include="Microsoft.ServiceFabric.Services" Version="4.2.445" />
+    <PackageReference Include="Microsoft.ServiceFabric.Services" Version="4.2.452" />
     <PackageReference Include="Ocelot" Version="17.0.0" />
   </ItemGroup>
 </Project>
